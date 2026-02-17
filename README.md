@@ -32,34 +32,66 @@ The default configuration uses the **Anthropic API** directly with `claude-sonne
 ## Prerequisites
 
 - Node.js >= 20
-- An AWS account with a Bedrock Knowledge Base configured
-- An API key for your chosen LLM provider (Anthropic by default)
+- AWS CLI v2 installed ([install guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html))
+- Access to the EUNA Solutions AWS account via SSO
 
 ## Setup
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+### 1. Configure AWS SSO
 
-2. Copy the environment template and fill in your values:
-   ```bash
-   cp .env.example .env
-   ```
+The agent uses AWS Bedrock Knowledge Base for document retrieval. You must configure an AWS SSO profile to authenticate.
 
-3. At minimum, configure these in `.env`:
-   ```env
-   # AWS profile for Bedrock Knowledge Base access
-   AWS_PROFILE=PowerUserAccess-553160715626
+Run the following command and enter these values when prompted:
 
-   # Your Bedrock Knowledge Base ID
-   KNOWLEDGE_BASE_ID=EVXFGYARHJ
+```bash
+aws configure sso
+```
 
-   # LLM provider (anthropic, bedrock, or openai)
-   LLM_PROVIDER=anthropic
-   ANTHROPIC_API_KEY=sk-ant-...
-   ANTHROPIC_MODEL=claude-sonnet-4-20250514
-   ```
+| Prompt | Value |
+|--------|-------|
+| SSO session name | `euna` (or any name you prefer) |
+| SSO start URL | `https://eunasolutions.awsapps.com/start` |
+| SSO region | `us-east-1` |
+| SSO registration scopes | Press Enter (use default) |
+
+A browser window will open — sign in with your EUNA Solutions credentials. Then:
+
+| Prompt | Value |
+|--------|-------|
+| Account | Select `553160715626` (Budget Pro Shared Services) |
+| Role | `PowerUserAccess+BedRockPerm` |
+| CLI default client Region | `us-east-1` |
+| CLI default output format | `json` |
+| CLI profile name | `PowerUserAccess-553160715626` |
+
+Verify it works:
+
+```bash
+aws sts get-caller-identity --profile PowerUserAccess-553160715626
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment
+
+```bash
+cp .env.example .env
+```
+
+The `.env` file is pre-configured with the correct `AWS_PROFILE` and `KNOWLEDGE_BASE_ID`. You only need to add your **Anthropic API key**:
+
+```env
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+> **Note:** If your SSO session expires, re-authenticate with:
+> ```bash
+> aws sso login --profile PowerUserAccess-553160715626
+> ```
 
 ## Running
 
