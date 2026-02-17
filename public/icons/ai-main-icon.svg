@@ -1,0 +1,8 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Purple stroke -->
+  <path d="M12.15 7.65L27.44 27.42" stroke="#7158F8" stroke-width="2"/>
+  <!-- Pink stroke -->
+  <path d="M27.44 27.42L10.88 38.02" stroke="#CC1A8B" stroke-width="2"/>
+  <!-- Orange stroke -->
+  <path d="M0.49 0.49L17.05 22.8" stroke="#FF7D2B" stroke-width="2"/>
+</svg>

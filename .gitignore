@@ -1,0 +1,28 @@
+# Node
+node_modules/
+dist/
+*.js.map
+*.d.ts
+!eslint.config.js
+coverage/
+
+# LangGraph
+.langgraph/
+.langgraph_api
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+.vs/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
